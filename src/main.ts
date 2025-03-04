@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { SwaggerModule } from '@nestjs/swagger';
-import * as YAML from 'yamljs';
 import { VersioningType } from '@nestjs/common';
 import helmet from '@fastify/helmet';
 import fastifyCsrf from '@fastify/csrf-protection';
@@ -51,9 +48,6 @@ async function bootstrap() {
   });
 
   await app.register(fastifyCsrf);
-
-  const swaggerDocument = YAML.load('./api.yaml');
-  SwaggerModule.setup('api-docs', app, swaggerDocument);
 
   await app.listen(3000, '0.0.0.0');
 }

@@ -6,6 +6,7 @@ export class AddressResponseDto {
   public city: string;
   public state: string;
   public country: string;
+  public postalCode: string;
   public complement?: string | null;
   public neighborhood?: string | null;
 
@@ -15,6 +16,7 @@ export class AddressResponseDto {
     this.city = entity.city;
     this.state = entity.state;
     this.country = entity.country;
+    this.postalCode = entity.postalCode;
     this.complement = entity.complement;
     this.neighborhood = entity.neighborhood;
   }

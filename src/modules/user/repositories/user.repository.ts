@@ -1,56 +1,66 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Inject, Injectable } from '@nestjs/common';
 import { IUserRepository } from '../interfaces/user-repository.interface';
-import { PrismaService } from '../../../../prisma/prisma.service';
+import { PrismaService } from '../../../../libs/prisma/prisma.service';
 import { UserEntity } from '../entity/user.entity';
 import { CreateUserDto } from '../dtos/inputs/create-user.dto';
-import { GetUserFilterDto } from '../dtos/inputs/get-user-filter.dto';
-import { GetUsersFilterDto } from '../dtos/inputs/get-users-filter.dto';
 import { UpdateUserDto } from '../dtos/inputs/update-user.dto';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-  @Inject(PrismaService)
-  private readonly $db: PrismaService = new PrismaService();
+  @Inject(PrismaService) private readonly $db: PrismaService;
 
-  public async getUser(data: GetUserFilterDto): Promise<UserEntity | null> {
-    const response: UserEntity | null = await this.$db.user.findFirst({
+  public async getUser(id: string): Promise<UserEntity | null> {
+    return await this.$db.user.findUnique({
       where: {
-        ...data,
+        id,
       },
+      include: { address: true },
     });
-    return response;
   }
 
-  public async getUsers(data: GetUsersFilterDto): Promise<UserEntity[]> {
-    const response: UserEntity[] = await this.$db.user.findMany({
-      where: {
-        ...data,
-      },
-    });
-    return response;
+  public async getUsers(): Promise<UserEntity[]> {
+    return await this.$db.user.findMany({ include: { address: true } });
   }
 
   public async createUser(data: CreateUserDto): Promise<UserEntity> {
-    const response: UserEntity = await this.$db.user.create({
+    return await this.$db.user.create({
       data: {
-        ...data,
+        name: data.name,
+        cpf: data.cpf,
+        email: data.email,
+        phone: data.phone,
+        address: data.address
+          ? {
+              create: {
+                street: data.address.street,
+                number: data.address.number,
+                complement: data.address.complement,
+                neighborhood: data.address.neighborhood,
+                city: data.address.city,
+                state: data.address.state,
+                country: data.address.country,
+                postalCode: data.address.postalCode,
+              },
+            }
+          : undefined,
       },
+      include: { address: true },
     });
-    return response;
   }
 
-  public async updateUser(data: UpdateUserDto): Promise<UserEntity> {
+  public async updateUser(
+    id: string,
+    data: UpdateUserDto,
+  ): Promise<UserEntity> {
     const response: UserEntity = await this.$db.user.update({
-      where: {
-        id: data.id,
-      },
+      where: { id },
       data: {
-        ...data,
+        name: data.name,
+        phone: data.phone,
       },
+      include: { address: true },
     });
+
     return response;
   }
 

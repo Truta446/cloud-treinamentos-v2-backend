@@ -1,16 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dtos/inputs/create-user.dto';
 import { UserResponseDto } from '../dtos/outputs/user-response.dto';
 import { UserRepository } from '../repositories/user.repository';
+import { UpdateUserDto } from '../dtos/inputs/update-user.dto';
 
 @Injectable()
-export class CreateUserUseCase {
-  @Inject(UserRepository)
-  private readonly userRepository: UserRepository;
+export class UpdateUserUseCase {
+  @Inject(UserRepository) private readonly userRepository: UserRepository;
 
-  public async execute(data: CreateUserDto): Promise<UserResponseDto> {
+  public async execute(
+    id: string,
+    data: UpdateUserDto,
+  ): Promise<UserResponseDto> {
     try {
-      const newUser = await this.userRepository.createUser(data);
+      const newUser = await this.userRepository.updateUser(id, data);
 
       return new UserResponseDto(newUser);
     } catch (error: unknown) {

@@ -3,6 +3,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { SystemModule } from './modules/system/system.module';
 import { UserModule } from './modules/user/user.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './modules/user/user.module';
     ]),
     SystemModule,
     UserModule,
+    UploadModule,
   ],
 })
 export class AppModule {}

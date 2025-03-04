@@ -8,7 +8,6 @@ export class UserResponseDto {
   public email: string;
   public phone: string;
   public createdAt: Date;
-  public updatedAt?: Date | null;
   public address?: AddressResponseDto[];
 
   constructor(entity: UserEntity) {
@@ -17,8 +16,9 @@ export class UserResponseDto {
     this.cpf = entity.cpf;
     this.email = entity.email;
     this.phone = entity.phone;
-    this.address = entity.address;
+    this.address = entity.address?.map(
+      (address) => new AddressResponseDto(address),
+    );
     this.createdAt = entity.createdAt;
-    this.updatedAt = entity.updatedAt;
   }
 }

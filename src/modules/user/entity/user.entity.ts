@@ -8,6 +8,5 @@ export class UserEntity {
   public phone: string;
   public createdAt: Date;
   public updatedAt?: Date | null;
-  public deletedAt?: Date | null;
   public address?: AddressEntity[];
 }

@@ -15,7 +15,7 @@ docker compose up -d
 
 # Rodar as migrations do Prisma
 echo "Rodando as migrations do Prisma..."
-npx prisma migrate dev --schema prisma/schema.prisma
-npx prisma generate --schema prisma/schema.prisma
+npx prisma migrate dev --schema libs/prisma/schema.prisma
+npx prisma generate --schema libs/prisma/schema.prisma
 
 echo "Ambiente de desenvolvimento configurado com sucesso!"
