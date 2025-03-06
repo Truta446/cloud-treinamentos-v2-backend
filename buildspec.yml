@@ -17,7 +17,7 @@ phases:
       - echo "Empurrando a imagem Docker para o Amazon ECR..."
       - docker push $ECR_URI:$IMAGE_TAG
       - docker push $ECR_URI:$(date +%Y%m%d%H%M)
-      - echo '[{"name":"nestjsv3","imageUri":"'"$ECR_URI:$IMAGE_TAG"'"}]' > imagedefinitions.json
+      - echo '[{"name":"backend","imageUri":"'"$ECR_URI:$IMAGE_TAG"'"}]' > imagedefinitions.json
       - echo "Build e push concluídos com sucesso!"
 artifacts:
   files:
