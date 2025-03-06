@@ -10,14 +10,7 @@ import { GetUsersUseCase } from './use-cases/get-users.use-case';
 
 @Module({
   imports: [PrismaModule],
-  providers: [
-    UserRepository,
-    CreateUserUseCase,
-    GetUserUseCase,
-    GetUsersUseCase,
-    UpdateUserUseCase,
-    DeleteUserUseCase,
-  ],
+  providers: [UserRepository, CreateUserUseCase, GetUserUseCase, GetUsersUseCase, UpdateUserUseCase, DeleteUserUseCase],
   controllers: [UserController],
 })
 export class UserModule {}

@@ -9,10 +9,7 @@ const AddressSchema = z
     city: z.string().min(2, 'A cidade deve ter pelo menos 2 caracteres'),
     state: z.string().min(2, 'O estado deve ter pelo menos 2 caracteres'),
     country: z.string().min(2, 'O país deve ter pelo menos 2 caracteres'),
-    postalCode: z
-      .string()
-      .min(8, 'O CEP deve ter 8 caracteres')
-      .max(8, 'O CEP deve ter 8 caracteres'),
+    postalCode: z.string().min(8, 'O CEP deve ter 8 caracteres').max(8, 'O CEP deve ter 8 caracteres'),
   })
   .optional();
 

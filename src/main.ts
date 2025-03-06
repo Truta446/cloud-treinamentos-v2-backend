@@ -1,53 +1,27 @@
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { VersioningType } from '@nestjs/common';
 import helmet from '@fastify/helmet';
 import fastifyCsrf from '@fastify/csrf-protection';
+import { json, urlencoded } from 'body-parser';
 
 import { AppModule } from './app.module';
-import { ORIGINS } from './common/constants/allowed-origins.constant';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter({ logger: true }),
-  );
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
-  app.enableCors({
-    origin: (origin, callback) => {
-      if (!origin || ORIGINS.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'), false);
-      }
-    },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  });
+  app.enableCors();
 
   app.enableVersioning({
     type: VersioningType.URI,
   });
 
-  app.register(helmet, {
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: [`'self'`],
-        styleSrc: [`'self'`, `'unsafe-inline'`],
-        imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
-        scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-      },
-    },
-  });
-
-  app.register(helmet, {
-    contentSecurityPolicy: false,
-  });
+  app.register(helmet);
 
   await app.register(fastifyCsrf);
+
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
 
   await app.listen(3000, '0.0.0.0');
 }

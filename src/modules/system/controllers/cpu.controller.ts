@@ -13,9 +13,7 @@ export class CPUController {
     const idleCpu = this.$os.getCpuUsage();
 
     if (idleCpu > 50) {
-      this.$os.exec(
-        'dd if=/dev/zero bs=100M count=500 | gzip | gzip -d  > /dev/null &',
-      );
+      this.$os.exec('dd if=/dev/zero bs=100M count=500 | gzip | gzip -d  > /dev/null &');
 
       return 'Gerando carga na CPU!';
     }

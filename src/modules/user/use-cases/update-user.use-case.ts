@@ -7,10 +7,7 @@ import { UpdateUserDto } from '../dtos/inputs/update-user.dto';
 export class UpdateUserUseCase {
   @Inject(UserRepository) private readonly userRepository: UserRepository;
 
-  public async execute(
-    id: string,
-    data: UpdateUserDto,
-  ): Promise<UserResponseDto> {
+  public async execute(id: string, data: UpdateUserDto): Promise<UserResponseDto> {
     try {
       const newUser = await this.userRepository.updateUser(id, data);
 

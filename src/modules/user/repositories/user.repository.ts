@@ -48,10 +48,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  public async updateUser(
-    id: string,
-    data: UpdateUserDto,
-  ): Promise<UserEntity> {
+  public async updateUser(id: string, data: UpdateUserDto): Promise<UserEntity> {
     const response: UserEntity = await this.$db.user.update({
       where: { id },
       data: {

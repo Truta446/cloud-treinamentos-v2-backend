@@ -16,9 +16,7 @@ export class UserResponseDto {
     this.cpf = entity.cpf;
     this.email = entity.email;
     this.phone = entity.phone;
-    this.address = entity.address?.map(
-      (address) => new AddressResponseDto(address),
-    );
+    this.address = entity.address?.map((address) => new AddressResponseDto(address));
     this.createdAt = entity.createdAt;
   }
 }

@@ -1,7 +1,7 @@
 services:
-  connect_database:
+  ct_database:
     image: postgres
-    container_name: connect_database
+    container_name: ct_database
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
