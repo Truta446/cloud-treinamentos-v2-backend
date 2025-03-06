@@ -10,6 +10,5 @@ export class AddressEntity {
   public neighborhood?: string | null;
   public createdAt: Date;
   public updatedAt?: Date | null;
-
   public userId: string;
 }
