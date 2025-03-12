@@ -18,7 +18,6 @@ export class OSService {
       uptime: os.uptime(),
       memoryUsage: this.getMemoryUsage(),
       cpuCores: os.cpus().length,
-      availabilityZone: process.env.AWS_AVAILABILITY_ZONE, // ECS AUTO INJECT
     };
   }
 
@@ -39,20 +38,21 @@ export class OSService {
 
   private getContainerId(): string {
     try {
-      return (
-        fs.readFileSync('/proc/1/cpuset', 'utf8').trim().slice(8) ||
-        'Not in container'
-      );
+      return fs.readFileSync('/proc/1/cpuset', 'utf8').trim().slice(8) || 'Not in container';
     } catch {
       return 'Not in container';
     }
   }
 
   private getMemoryUsage(): any {
+    const totalMem = os.totalmem() / (1024 * 1024 * 1024);
+    const freeMem = os.freemem() / (1024 * 1024 * 1024);
+    const usedMem = totalMem - freeMem;
+
     return {
-      total: os.totalmem(),
-      free: os.freemem(),
-      used: os.totalmem() - os.freemem(),
+      total: Number(totalMem.toFixed()),
+      free: Number(freeMem.toFixed()),
+      used: Number(usedMem.toFixed()),
     };
   }
 }

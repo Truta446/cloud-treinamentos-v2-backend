@@ -7,12 +7,10 @@ export class UploadImageUseCase {
 
   public async execute(data: any): Promise<boolean> {
     try {
-      const content = data.file.split(';');
-
       await this.$s3.uploadFile({
         path: 'logo',
-        contentType: content[0].split(':')[1],
-        file: Buffer.from(content[1], 'base64'),
+        contentType: data.file.split(';')[0].split(':')[1],
+        file: Buffer.from(data.file.split(',')[1], 'base64'),
       });
 
       return true;

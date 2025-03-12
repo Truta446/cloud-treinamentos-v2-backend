@@ -9,26 +9,26 @@ export class CPUController {
   @Inject(OSService) private readonly $os: OSService;
 
   @Get('start')
-  public startLoad(): string {
+  public startLoad(): any {
     const idleCpu = this.$os.getCpuUsage();
 
     if (idleCpu > 50) {
       this.$os.exec('dd if=/dev/zero bs=100M count=500 | gzip | gzip -d  > /dev/null &');
 
-      return 'Gerando carga na CPU!';
+      return { message: 'Gerando carga na CPU!' };
     }
 
-    return 'Já está sob alta carga!';
+    return { message: 'Já está sob alta carga!' };
   }
 
   @Get('stop')
-  public stopLoad(): string {
+  public stopLoad(): any {
     this.$os.exec('killall gzip', (err) => {
       if (err) {
-        return 'Erro ao parar a carga!';
+        return { message: 'Erro ao parar a carga!' };
       }
     });
 
-    return 'Carga da CPU interrompida!';
+    return { message: 'Carga da CPU interrompida!' };
   }
 }
