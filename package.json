@@ -9,10 +9,10 @@
     "build": "nest build",
     "start": "./scripts/dev-environment.sh && nest start --watch",
     "start:prod": "node dist/src/main",
-    "lint:prettier:check": "prettier --check \"src/**/*.ts\"",
-    "lint:prettier:fix": "prettier --write \"src/**/*.ts\"",
-    "lint:eslint:check": "eslint \"{src,apps,libs}/**/*.ts\"",
-    "lint:eslint:fix": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
+    "lint:prettier:check": "prettier --check \"{src,libs}/**/*.ts\"",
+    "lint:prettier:fix": "prettier --write \"{src,libs}/**/*.ts\"",
+    "lint:eslint:check": "eslint \"{src,libs}/**/*.ts\"",
+    "lint:eslint:fix": "eslint \"{src,libs}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
